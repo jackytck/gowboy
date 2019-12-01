@@ -1,8 +1,11 @@
-package prime
+package prime_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/jackytck/gowboy/prime"
 )
 
 func TestFactors(t *testing.T) {
@@ -20,11 +23,21 @@ func TestFactors(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Factors(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := prime.Factors(tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Factors() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func ExampleFactors() {
+	facs := prime.Factors(98937249)
+	for k, v := range facs {
+		fmt.Println(k, v)
+	}
+	// Output:
+	// 3 1
+	// 32979083 1
 }
 
 func TestIsPrime(t *testing.T) {
@@ -48,11 +61,16 @@ func TestIsPrime(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := IsPrime(tt.args.n); got != tt.want {
+			if got := prime.IsPrime(tt.args.n); got != tt.want {
 				t.Errorf("IsPrime() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func ExampleIsPrime() {
+	fmt.Println(prime.IsPrime(9837249))
+	// Output: false
 }
 
 func TestSieve(t *testing.T) {
@@ -72,7 +90,7 @@ func TestSieve(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := Sieve(tt.args.n)
+			got := prime.Sieve(tt.args.n)
 			if len(got) == 0 && len(tt.want) == 0 {
 				return
 			}
@@ -81,6 +99,11 @@ func TestSieve(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleSieve() {
+	fmt.Println(prime.Sieve(20))
+	// Output: [2 3 5 7 11 13 17 19]
 }
 
 func TestRange(t *testing.T) {
@@ -110,9 +133,14 @@ func TestRange(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Range(tt.args.a, tt.args.b); !reflect.DeepEqual(got, tt.want) {
+			if got := prime.Range(tt.args.a, tt.args.b); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Range() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func ExampleRange() {
+	fmt.Println(prime.Range(300, 400))
+	// Output: [307 311 313 317 331 337 347 349 353 359 367 373 379 383 389 397]
 }

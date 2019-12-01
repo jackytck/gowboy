@@ -1,7 +1,10 @@
-package common
+package common_test
 
 import (
+	"fmt"
 	"testing"
+
+	"github.com/jackytck/gowboy/common"
 )
 
 func TestSum(t *testing.T) {
@@ -20,11 +23,16 @@ func TestSum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Sum(tt.args.a...); got != tt.want {
+			if got := common.Sum(tt.args.a...); got != tt.want {
 				t.Errorf("Sum() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func ExampleSum() {
+	fmt.Println(common.Sum([]int{2, 3, 5, 7, 11, 13}...))
+	// Output: 41
 }
 
 func TestSqrtInt(t *testing.T) {
@@ -43,9 +51,14 @@ func TestSqrtInt(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SqrtInt(tt.args.n); got != tt.want {
+			if got := common.SqrtInt(tt.args.n); got != tt.want {
 				t.Errorf("SqrtInt() = %v, want %v", got, tt.want)
 			}
 		})
 	}
+}
+
+func ExampleSqrtInt() {
+	fmt.Println(common.SqrtInt(123))
+	// Output: 11
 }
