@@ -5,6 +5,16 @@ import (
 	"github.com/jackytck/gowboy/prime"
 )
 
+// Divisors returns all the divisors of n.
+func Divisors(n int) []int {
+	if n == 1 {
+		return []int{1}
+	}
+	d := ProperDivisors(n)
+	d = append(d, n)
+	return d
+}
+
 // ProperDivisors returns all the proper divisors of n.
 func ProperDivisors(n int) []int {
 	d := []int{1}
@@ -19,6 +29,11 @@ func ProperDivisors(n int) []int {
 	}
 	d = append(d, others...)
 	return d
+}
+
+// SumDivisors sums all the divisors of n.
+func SumDivisors(n int) int {
+	return common.Sum(Divisors(n)...)
 }
 
 // SumProperDivisors sums all the proper divisors of n.
