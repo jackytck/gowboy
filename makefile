@@ -1,9 +1,3 @@
-ci-lint:
-	go get -u golang.org/x/lint/golint
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b . v1.21.0
-	golint ./...
-	./golangci-lint run
-
 lint:
 	golint ./...
 	golangci-lint run
