@@ -20,6 +20,5 @@ jobs:
         path: ./gowboy/src/github.com/${{ github.repository }}
     - name: Test
       run: |
-        make install-lint
-        make lint
+        make ci-lint
         make test
