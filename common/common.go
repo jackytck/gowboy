@@ -15,3 +15,8 @@ func Sum(a ...int) int {
 func SqrtInt(n int) int {
 	return int(math.Sqrt(float64(n)))
 }
+
+// Divmod gives the quotient and remainder of integer division.
+func Divmod(a, b int) (int, int) {
+	return a / b, a % b
+}
