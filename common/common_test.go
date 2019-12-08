@@ -2,6 +2,8 @@ package common_test
 
 import (
 	"fmt"
+	"math/big"
+	"reflect"
 	"testing"
 
 	"github.com/jackytck/gowboy/common"
@@ -93,7 +95,36 @@ func TestDivmod(t *testing.T) {
 		})
 	}
 }
+
 func ExampleDivmod() {
 	fmt.Println(common.Divmod(669, 13))
 	// Output: 51 6
+}
+
+func TestExp(t *testing.T) {
+	type args struct {
+		x int
+		y int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{2, 2}, big.NewInt(4)},
+		{"Case 2", args{2, 10}, big.NewInt(1024)},
+		{"Case 3", args{5, 23}, big.NewInt(11920928955078125)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.Exp(tt.args.x, tt.args.y); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Exp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleExp() {
+	fmt.Println(common.Exp(13, 23))
+	// Output: 41753905413413116367045797
 }

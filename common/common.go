@@ -1,6 +1,9 @@
 package common
 
-import "math"
+import (
+	"math"
+	"math/big"
+)
 
 // Sum returns the sum of its argument.
 func Sum(a ...int) int {
@@ -19,4 +22,14 @@ func SqrtInt(n int) int {
 // Divmod gives the quotient and remainder of integer division.
 func Divmod(a, b int) (int, int) {
 	return a / b, a % b
+}
+
+// Exp computes x to the power of y.
+func Exp(x, y int) *big.Int {
+	a := big.NewInt(1)
+	b := big.NewInt(int64(x))
+	for i := 0; i < y; i++ {
+		a.Mul(a, b)
+	}
+	return a
 }
