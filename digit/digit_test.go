@@ -1,6 +1,7 @@
 package digit_test
 
 import (
+	"fmt"
 	"math/big"
 	"reflect"
 	"testing"
@@ -29,4 +30,9 @@ func TestSliceIntBig(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleSliceIntBig() {
+	fmt.Println(digit.SliceIntBig(big.NewInt(3141592653589793238)))
+	// Output: [3 1 4 1 5 9 2 6 5 3 5 8 9 7 9 3 2 3 8]
 }
