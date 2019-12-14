@@ -63,3 +63,30 @@ func ExampleSliceIntBig() {
 	fmt.Println(digit.SliceIntBig(big.NewInt(3141592653589793238)))
 	// Output: [3 1 4 1 5 9 2 6 5 3 5 8 9 7 9 3 2 3 8]
 }
+
+func TestSumBig(t *testing.T) {
+	type args struct {
+		n *big.Int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{big.NewInt(123456789)}, big.NewInt(45)},
+		{"Case 2", args{big.NewInt(3984759237523475945)}, big.NewInt(101)},
+		{"Case 3", args{big.NewInt(9223372036854775807)}, big.NewInt(88)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.SumBig(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SumBig() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleSumBig() {
+	fmt.Println(digit.SumBig(big.NewInt(3141592653589793238)))
+	// Output: 93
+}

@@ -34,3 +34,13 @@ func SliceIntBig(n *big.Int) []int {
 	}
 	return d
 }
+
+// SumBig sums the digits of a big number.
+func SumBig(n *big.Int) *big.Int {
+	s := big.NewInt(0)
+	for _, d := range SliceIntBig(n) {
+		z := big.NewInt(int64(d))
+		s.Add(s, z)
+	}
+	return s
+}
