@@ -9,6 +9,33 @@ import (
 	"github.com/jackytck/gowboy/digit"
 )
 
+func TestSliceInt(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"Case 1", args{0}, []int{0}},
+		{"Case 2", args{123}, []int{1, 2, 3}},
+		{"Case 3", args{2357111317}, []int{2, 3, 5, 7, 1, 1, 1, 3, 1, 7}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.SliceInt(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SliceInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleSliceInt() {
+	fmt.Println(digit.SliceInt(31415926535))
+	// Output: [3 1 4 1 5 9 2 6 5 3 5]
+}
+
 func TestSliceIntBig(t *testing.T) {
 	type args struct {
 		n *big.Int

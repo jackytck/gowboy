@@ -4,6 +4,19 @@ import (
 	"math/big"
 )
 
+// SliceInt returns the individual digits as a slice of int.
+func SliceInt(n int) []int {
+	if n == 0 {
+		return []int{0}
+	}
+	var d []int
+	for n > 0 {
+		d = append([]int{n % 10}, d...)
+		n /= 10
+	}
+	return d
+}
+
 // SliceIntBig returns the individual digits of a big.Int as a slice of int.
 func SliceIntBig(n *big.Int) []int {
 	x := big.NewInt(0)
