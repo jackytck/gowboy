@@ -2,6 +2,7 @@ package digit
 
 import (
 	"math/big"
+	"strconv"
 
 	"github.com/jackytck/gowboy/common"
 )
@@ -63,6 +64,16 @@ func JoinIntsBig(slice []int) *big.Int {
 		p.Div(p, ten)
 	}
 	return sum
+}
+
+// Sum sums the digit^p of a given number.
+func Sum(n, p int) *big.Int {
+	s := big.NewInt(0)
+	for _, c := range strconv.Itoa(n) {
+		i, _ := strconv.Atoi(string(c))
+		s.Add(s, common.Exp(i, p))
+	}
+	return s
 }
 
 // SumBig sums the digits of a big number.
