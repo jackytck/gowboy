@@ -119,6 +119,35 @@ func ExampleJoinIntsBig() {
 	// Output: 3141592653589793238
 }
 
+func TestSum(t *testing.T) {
+	type args struct {
+		n int
+		p int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{12, 1}, big.NewInt(3)},
+		{"Case 2", args{123, 2}, big.NewInt(14)},
+		{"Case 3", args{23571113, 3}, big.NewInt(533)},
+		{"Case 4", args{1123581321, 11}, big.NewInt(8639121111)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.Sum(tt.args.n, tt.args.p); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Sum() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleSum() {
+	fmt.Println(digit.Sum(12345, 2))
+	// Output: 55
+}
+
 func TestSumBig(t *testing.T) {
 	type args struct {
 		n *big.Int
