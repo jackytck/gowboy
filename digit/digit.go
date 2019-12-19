@@ -85,3 +85,12 @@ func SumBig(n *big.Int) *big.Int {
 	}
 	return s
 }
+
+// GetIth returns the i-th digit of a number n.
+func GetIth(n, i int) int {
+	d := SliceInt(n)
+	if i < 0 || i >= len(d) {
+		return -1
+	}
+	return d[i]
+}

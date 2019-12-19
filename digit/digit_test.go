@@ -174,3 +174,28 @@ func ExampleSumBig() {
 	fmt.Println(digit.SumBig(big.NewInt(3141592653589793238)))
 	// Output: 93
 }
+
+func TestDigitsIth(t *testing.T) {
+	type args struct {
+		n int
+		i int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"Case 1", args{123456, -123}, -1},
+		{"Case 1", args{123456, 0}, 1},
+		{"Case 1", args{2357111317, 7}, 3},
+		{"Case 1", args{27141816, 8}, -1},
+		{"Case 1", args{3141516, 2}, 4},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.GetIth(tt.args.n, tt.args.i); got != tt.want {
+				t.Errorf("DigitsIth() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
