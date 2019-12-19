@@ -64,6 +64,33 @@ func ExampleSliceIntBig() {
 	// Output: [3 1 4 1 5 9 2 6 5 3 5 8 9 7 9 3 2 3 8]
 }
 
+func TestReverseSliceInts(t *testing.T) {
+	type args struct {
+		a []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"Case 1", args{[]int{1, 2, 3, 4, 5, 6, 7}}, []int{7, 6, 5, 4, 3, 2, 1}},
+		{"Case 2", args{[]int{2, 3, 5, 7, 11, 13, 17}}, []int{17, 13, 11, 7, 5, 3, 2}},
+		{"Case 3", args{[]int{0, 72, 5, -12, 7, 4, 17}}, []int{17, 4, 7, -12, 5, 72, 0}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.ReverseSliceInts(tt.args.a); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ReverseSliceInts() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleReverseSliceInts() {
+	fmt.Println(digit.ReverseSliceInts([]int{4, 1, 3, 1, 0, 2, 5}))
+	// Output: [5 2 0 1 3 1 4]
+}
+
 func TestJoinInts(t *testing.T) {
 	type args struct {
 		slice []int
@@ -175,7 +202,7 @@ func ExampleSumBig() {
 	// Output: 93
 }
 
-func TestDigitsIth(t *testing.T) {
+func TestGetIth(t *testing.T) {
 	type args struct {
 		n int
 		i int
@@ -198,4 +225,9 @@ func TestDigitsIth(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleTestGetIth() {
+	fmt.Println(digit.GetIth(23418715, 5))
+	// Output: 7
 }

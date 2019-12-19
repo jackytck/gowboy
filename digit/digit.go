@@ -38,6 +38,16 @@ func SliceIntBig(n *big.Int) []int {
 	return d
 }
 
+// ReverseSliceInts reverses a slice of ints, and return the new slice.
+func ReverseSliceInts(a []int) []int {
+	s := len(a)
+	r := make([]int, s)
+	for i, v := range a {
+		r[s-1-i] = v
+	}
+	return r
+}
+
 // JoinInts joins slice of single digit ints and return it as an int.
 func JoinInts(slice []int) int {
 	var sum int
