@@ -231,3 +231,49 @@ func ExampleTestGetIth() {
 	fmt.Println(digit.GetIth(23418715, 5))
 	// Output: 7
 }
+
+func TestReverseInt(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		// TODO: Add test cases.
+		{"Case 1", args{0}, 0},
+		{"Case 2", args{1}, 1},
+		{"Case 3", args{2357111317}, 7131117532},
+		{"Case 4", args{112358132134}, 431231853211},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.ReverseInt(tt.args.n); got != tt.want {
+				t.Errorf("ReverseInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestReverseIntBig(t *testing.T) {
+	type args struct {
+		n *big.Int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{big.NewInt(0)}, big.NewInt(0)},
+		{"Case 2", args{big.NewInt(1234567890987654321)}, big.NewInt(1234567890987654321)},
+		{"Case 3", args{big.NewInt(1123581321345589144)}, big.NewInt(4419855431231853211)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.ReverseIntBig(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ReverseIntBig() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

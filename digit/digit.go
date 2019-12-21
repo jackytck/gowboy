@@ -104,3 +104,13 @@ func GetIth(n, i int) int {
 	}
 	return d[i]
 }
+
+// ReverseInt reverses a non-negative int.
+func ReverseInt(n int) int {
+	return JoinInts(ReverseSliceInts(SliceInt(n)))
+}
+
+// ReverseIntBig reverses a given big.Int.
+func ReverseIntBig(n *big.Int) *big.Int {
+	return JoinIntsBig(ReverseSliceInts(SliceIntBig(n)))
+}
