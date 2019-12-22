@@ -128,3 +128,33 @@ func ExampleExp() {
 	fmt.Println(common.Exp(13, 23))
 	// Output: 41753905413413116367045797
 }
+
+func TestFactorial(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{0}, big.NewInt(1)},
+		{"Case 2", args{1}, big.NewInt(1)},
+		{"Case 3", args{2}, big.NewInt(2)},
+		{"Case 4", args{10}, big.NewInt(3628800)},
+		{"Case 5", args{15}, big.NewInt(1307674368000)},
+		{"Case 6", args{20}, big.NewInt(2432902008176640000)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.Factorial(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Factorial() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleFactorial() {
+	fmt.Println(common.Factorial(23))
+	// Output: 25852016738884976640000
+}

@@ -33,3 +33,12 @@ func Exp(x, y int) *big.Int {
 	}
 	return a
 }
+
+// Factorial returns the fractorial of a number.
+func Factorial(n int) *big.Int {
+	a := big.NewInt(1)
+	for i := 2; i <= n; i++ {
+		a.Mul(a, big.NewInt(int64(i)))
+	}
+	return a
+}
