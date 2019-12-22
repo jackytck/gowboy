@@ -227,7 +227,7 @@ func TestGetIth(t *testing.T) {
 	}
 }
 
-func ExampleTestGetIth() {
+func ExampleGetIth() {
 	fmt.Println(digit.GetIth(23418715, 5))
 	// Output: 7
 }
@@ -256,6 +256,11 @@ func TestReverseInt(t *testing.T) {
 	}
 }
 
+func ExampleReverseInt() {
+	fmt.Println(digit.ReverseInt(234958))
+	// Output: 859432
+}
+
 func TestReverseIntBig(t *testing.T) {
 	type args struct {
 		n *big.Int
@@ -276,4 +281,9 @@ func TestReverseIntBig(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleReverseIntBig() {
+	fmt.Println(digit.ReverseIntBig(big.NewInt(384590274355982345)))
+	// Output: 543289553472095483
 }
