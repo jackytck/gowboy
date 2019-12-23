@@ -158,3 +158,85 @@ func ExampleFactorial() {
 	fmt.Println(common.Factorial(23))
 	// Output: 25852016738884976640000
 }
+
+func TestProdInts(t *testing.T) {
+	type args struct {
+		slice []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"Case 1", args{[]int{1, 2, 3, 4, 5, 6}}, 720},
+		{"Case 2", args{[]int{0, 2, 3, 4, 5, 6, 3, 12}}, 0},
+		{"Case 3", args{[]int{2, 3, 5, 7, 11, 13}}, 30030},
+		{"Case 4", args{[]int{12, 46, 78, 9, 2, 13}}, 10075104},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.ProdInts(tt.args.slice); got != tt.want {
+				t.Errorf("ProdInts() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleProdInts() {
+	fmt.Println(common.ProdInts([]int{2, 3, 5, 7}))
+	// Output: 210
+}
+
+func TestMinInt(t *testing.T) {
+	type args struct {
+		a []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"Case 1", args{[]int{2, 3, 5, 7, 11, 13, 17, 19, 23}}, 2},
+		{"Case 2", args{[]int{2, 3, 4, -1}}, -1},
+		{"Case 3", args{[]int{1, 3, 1, 0, 2, 689}}, 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.MinInt(tt.args.a...); got != tt.want {
+				t.Errorf("MinInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleMinInt() {
+	fmt.Println(common.MinInt(2, 3, 5, 7))
+	// Output: 2
+}
+
+func TestMaxInt(t *testing.T) {
+	type args struct {
+		a []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"Case 1", args{[]int{2, 3, 5, 7, 11, 13, 17, 19, 23}}, 23},
+		{"Case 2", args{[]int{2, 3, 4, -1}}, 4},
+		{"Case 3", args{[]int{1, 3, 1, 0, 2, 689}}, 689},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.MaxInt(tt.args.a...); got != tt.want {
+				t.Errorf("MaxInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleMaxInt() {
+	fmt.Println(common.MaxInt(2, 3, 5, 7))
+	// Output: 7
+}

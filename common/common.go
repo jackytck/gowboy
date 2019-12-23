@@ -42,3 +42,40 @@ func Factorial(n int) *big.Int {
 	}
 	return a
 }
+
+// ProdInts computes the product of the slice of ints.
+func ProdInts(slice []int) int {
+	p := 1
+	for _, v := range slice {
+		p *= v
+	}
+	return p
+}
+
+// MinInt returns the smallest number.
+func MinInt(a ...int) int {
+	var ret int
+	for i, v := range a {
+		if i == 0 {
+			ret = v
+		}
+		if v < ret {
+			ret = v
+		}
+	}
+	return ret
+}
+
+// MaxInt returns the largest number.
+func MaxInt(a ...int) int {
+	var ret int
+	for i, v := range a {
+		if i == 0 {
+			ret = v
+		}
+		if v > ret {
+			ret = v
+		}
+	}
+	return ret
+}
