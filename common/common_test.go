@@ -240,3 +240,30 @@ func ExampleMaxInt() {
 	fmt.Println(common.MaxInt(2, 3, 5, 7))
 	// Output: 7
 }
+
+func TestReverseString(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"Case 1", args{"nat is nat"}, "tan si tan"},
+		{"Case 2", args{"29374502937845"}, "54873920547392"},
+		{"Case 3", args{"tacocat"}, "tacocat"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.ReverseString(tt.args.s); got != tt.want {
+				t.Errorf("ReverseString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleReverseString() {
+	fmt.Println(common.ReverseString("a racecar"))
+	// Output: racecar a
+}

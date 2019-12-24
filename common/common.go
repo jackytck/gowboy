@@ -79,3 +79,12 @@ func MaxInt(a ...int) int {
 	}
 	return ret
 }
+
+// ReverseString reverses a string
+func ReverseString(s string) string {
+	var r string
+	for _, v := range s {
+		r = string(v) + r
+	}
+	return r
+}
