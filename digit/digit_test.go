@@ -287,3 +287,90 @@ func ExampleReverseIntBig() {
 	fmt.Println(digit.ReverseIntBig(big.NewInt(384590274355982345)))
 	// Output: 543289553472095483
 }
+
+func TestIsPalindromeInt(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{0}, true},
+		{"Case 2", args{12321}, true},
+		{"Case 3", args{1231}, false},
+		{"Case 4", args{112353211}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsPalindromeInt(tt.args.n); got != tt.want {
+				t.Errorf("IsPalindromeInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsPalindromeInt() {
+	fmt.Println(digit.IsPalindromeInt(13331))
+	// Output: true
+}
+
+func TestIsPalindromeIntBig(t *testing.T) {
+	type args struct {
+		n *big.Int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{big.NewInt(0)}, true},
+		{"Case 2", args{big.NewInt(12321)}, true},
+		{"Case 3", args{big.NewInt(1231)}, false},
+		{"Case 4", args{big.NewInt(112353211)}, true},
+		{"Case 5", args{big.NewInt(314159265562951413)}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsPalindromeIntBig(tt.args.n); got != tt.want {
+				t.Errorf("IsPalindromeIntBig() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsPalindromeIntBig() {
+	fmt.Println(digit.IsPalindromeIntBig(big.NewInt(12171330203317121)))
+	// Output: true
+}
+
+func TestIsPalindromeString(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{"nat"}, false},
+		{"Case 2", args{"tacocat"}, true},
+		{"Case 3", args{"madam"}, true},
+		{"Case 4", args{"racecar"}, true},
+		{"Case 5", args{"10801"}, true},
+		{"Case 6", args{"airbus"}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsPalindromeString(tt.args.s); got != tt.want {
+				t.Errorf("IsPalindromeString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsPalindromeString() {
+	fmt.Println(digit.IsPalindromeString("11933316181512171330203317121518161333911"))
+	// Output: true
+}

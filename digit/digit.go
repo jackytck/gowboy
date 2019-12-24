@@ -114,3 +114,19 @@ func ReverseInt(n int) int {
 func ReverseIntBig(n *big.Int) *big.Int {
 	return JoinIntsBig(ReverseSliceInts(SliceIntBig(n)))
 }
+
+// IsPalindromeInt tells if a number is a palindrome,
+// i.e. reads the same backward as forward.
+func IsPalindromeInt(n int) bool {
+	return IsPalindromeString(strconv.Itoa(n))
+}
+
+// IsPalindromeIntBig tells if a big.Int number is a palindrome.
+func IsPalindromeIntBig(n *big.Int) bool {
+	return IsPalindromeString(n.String())
+}
+
+// IsPalindromeString tells if a given string is a palindrome.
+func IsPalindromeString(s string) bool {
+	return s == common.ReverseString(s)
+}
