@@ -1,6 +1,9 @@
 package number
 
-import "math"
+import (
+	"math"
+	"math/big"
+)
 
 // SquareNumber returns the n-th square number.
 // e.g. 1, 4, 9, 16, 25, ...
@@ -71,4 +74,11 @@ func OctagonalNumber(n int) int {
 func IsOctagonalNumber(n int) bool {
 	t := (math.Sqrt(3*float64(n)+1) + 1) / 3
 	return t == math.Floor(t)
+}
+
+// Catalan returns the Catalan Number of n.
+func Catalan(n int64) *big.Int {
+	z := big.NewInt(0)
+	z.Binomial(2*n, n)
+	return z.Quo(z, big.NewInt(n+1))
 }

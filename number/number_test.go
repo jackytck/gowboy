@@ -2,6 +2,8 @@ package number_test
 
 import (
 	"fmt"
+	"math/big"
+	"reflect"
 	"testing"
 
 	"github.com/jackytck/gowboy/number"
@@ -407,4 +409,54 @@ func TestIsOctagonalNumber(t *testing.T) {
 func ExampleIsOctagonalNumber() {
 	fmt.Println(number.IsOctagonalNumber(1541))
 	// Output: true
+}
+
+func TestCatalan(t *testing.T) {
+	type args struct {
+		n int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want *big.Int
+	}{
+		{"Case 1", args{0}, big.NewInt(1)},
+		{"Case 2", args{1}, big.NewInt(1)},
+		{"Case 3", args{2}, big.NewInt(2)},
+		{"Case 4", args{3}, big.NewInt(5)},
+		{"Case 5", args{4}, big.NewInt(14)},
+		{"Case 6", args{5}, big.NewInt(42)},
+		{"Case 7", args{6}, big.NewInt(132)},
+		{"Case 8", args{7}, big.NewInt(429)},
+		{"Case 9", args{8}, big.NewInt(1430)},
+		{"Case 10", args{9}, big.NewInt(4862)},
+		{"Case 11", args{10}, big.NewInt(16796)},
+		{"Case 12", args{11}, big.NewInt(58786)},
+		{"Case 13", args{12}, big.NewInt(208012)},
+		{"Case 14", args{13}, big.NewInt(742900)},
+		{"Case 15", args{14}, big.NewInt(2674440)},
+		{"Case 16", args{15}, big.NewInt(9694845)},
+		{"Case 17", args{16}, big.NewInt(35357670)},
+		{"Case 18", args{17}, big.NewInt(129644790)},
+		{"Case 19", args{18}, big.NewInt(477638700)},
+		{"Case 20", args{19}, big.NewInt(1767263190)},
+		{"Case 21", args{20}, big.NewInt(6564120420)},
+		{"Case 22", args{21}, big.NewInt(24466267020)},
+		{"Case 23", args{22}, big.NewInt(91482563640)},
+		{"Case 24", args{23}, big.NewInt(343059613650)},
+		{"Case 25", args{24}, big.NewInt(1289904147324)},
+		{"Case 26", args{25}, big.NewInt(4861946401452)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := number.Catalan(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Catalan() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleCatalan() {
+	fmt.Println(number.Catalan(26))
+	// Output: 18367353072152
 }
