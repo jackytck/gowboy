@@ -374,3 +374,34 @@ func ExampleIsPalindromeString() {
 	fmt.Println(digit.IsPalindromeString("11933316181512171330203317121518161333911"))
 	// Output: true
 }
+
+func TestIsPermuted(t *testing.T) {
+	type args struct {
+		a int
+		b int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{0, 0}, true},
+		{"Case 2", args{123, 213}, true},
+		{"Case 3", args{1243, 213}, false},
+		{"Case 4", args{11235, 53121}, true},
+		{"Case 5", args{112035, 53121}, false},
+		{"Case 6", args{112035, 503121}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsPermuted(tt.args.a, tt.args.b); got != tt.want {
+				t.Errorf("IsPermuted() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsPermuted() {
+	fmt.Println(digit.IsPermuted(312, 123))
+	// Output: true
+}

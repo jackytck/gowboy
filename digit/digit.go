@@ -2,6 +2,7 @@ package digit
 
 import (
 	"math/big"
+	"sort"
 	"strconv"
 
 	"github.com/jackytck/gowboy/common"
@@ -129,4 +130,13 @@ func IsPalindromeIntBig(n *big.Int) bool {
 // IsPalindromeString tells if a given string is a palindrome.
 func IsPalindromeString(s string) bool {
 	return s == common.ReverseString(s)
+}
+
+// IsPermuted determines if digits in the two given ints are permuted.
+func IsPermuted(a, b int) bool {
+	da := SliceInt(a)
+	db := SliceInt(b)
+	sort.Ints(da)
+	sort.Ints(db)
+	return len(da) == len(db) && JoinInts(da) == JoinInts(db)
 }
