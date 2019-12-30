@@ -187,3 +187,36 @@ func ExampleNumDivisors() {
 	fmt.Println(divide.NumDivisors(2318))
 	// Output: 8
 }
+
+func TestGCD(t *testing.T) {
+	type args struct {
+		x int
+		y int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{"Case 1", args{0, 0}, -1},
+		{"Case 2", args{8, 12}, 4},
+		{"Case 3", args{54, 24}, 6},
+		{"Case 4", args{18, 48}, 6},
+		{"Case 5", args{42, 56}, 14},
+		{"Case 6", args{42, -56}, 14},
+		{"Case 7", args{-35, 280}, 35},
+		{"Case 8", args{252, 105}, 21},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := divide.GCD(tt.args.x, tt.args.y); got != tt.want {
+				t.Errorf("GCD() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleGCD() {
+	fmt.Println(divide.GCD(234, 819))
+	// Output: 117
+}
