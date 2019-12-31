@@ -220,3 +220,38 @@ func ExampleGCD() {
 	fmt.Println(divide.GCD(234, 819))
 	// Output: 117
 }
+
+func TestSimplifyFraction(t *testing.T) {
+	type args struct {
+		a int
+		b int
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  int
+		want1 int
+	}{
+		// TODO: Add test cases.
+		{"Case 1", args{2, 4}, 1, 2},
+		{"Case 2", args{8, 12}, 2, 3},
+		{"Case 3", args{10, 35}, 2, 7},
+		{"Case 4", args{24, 108}, 2, 9},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := divide.SimplifyFraction(tt.args.a, tt.args.b)
+			if got != tt.want {
+				t.Errorf("SimplifyFraction() got = %v, want %v", got, tt.want)
+			}
+			if got1 != tt.want1 {
+				t.Errorf("SimplifyFraction() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
+func ExampleSimplifyFraction() {
+	fmt.Println(divide.SimplifyFraction(163926, 679122))
+	// Output: 7 29
+}

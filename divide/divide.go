@@ -67,3 +67,9 @@ func GCD(x, y int) int {
 	}
 	return x
 }
+
+// SimplifyFraction simplifies a/b and return the (numerator, denominator).
+func SimplifyFraction(a, b int) (int, int) {
+	gcd := GCD(a, b)
+	return a / gcd, b / gcd
+}
