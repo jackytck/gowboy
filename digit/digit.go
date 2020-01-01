@@ -140,3 +140,17 @@ func IsPermuted(a, b int) bool {
 	sort.Ints(db)
 	return len(da) == len(db) && JoinInts(da) == JoinInts(db)
 }
+
+// IsPandigital determines if a number is pandigital.
+func IsPandigital(n int) bool {
+	d := SliceInt(n)
+	sort.Ints(d)
+	ans := true
+	for i, v := range d {
+		if i+1 != v {
+			ans = false
+			break
+		}
+	}
+	return ans
+}

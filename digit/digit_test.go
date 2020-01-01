@@ -405,3 +405,39 @@ func ExampleIsPermuted() {
 	fmt.Println(digit.IsPermuted(312, 123))
 	// Output: true
 }
+
+func TestIsPandigital(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{0}, false},
+		{"Case 2", args{1}, true},
+		{"Case 3", args{312}, true},
+		{"Case 4", args{3142}, true},
+		{"Case 5", args{53142}, true},
+		{"Case 6", args{536142}, true},
+		{"Case 7", args{5376147}, false},
+		{"Case 8", args{537861947}, false},
+		{"Case 9", args{537861942}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsPandigital(tt.args.n); got != tt.want {
+				t.Errorf("IsPandigital() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsPandigital() {
+	fmt.Println(digit.IsPandigital(243781569))
+	fmt.Println(digit.IsPandigital(35218946))
+	// Output:
+	// true
+	// false
+}
