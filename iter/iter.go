@@ -1,5 +1,7 @@
 package iter
 
+import "math/big"
+
 // Perms return a channel of each permutation of a slice.
 func Perms(slice []int) chan []int {
 	c := make(chan []int)
@@ -18,4 +20,10 @@ func Perms(slice []int) chan []int {
 		close(c)
 	}()
 	return c
+}
+
+// NCR computes the number nCr.
+func NCR(n, r int) *big.Int {
+	z := big.NewInt(0)
+	return z.Binomial(int64(n), int64(r))
 }
