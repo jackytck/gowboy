@@ -16,14 +16,16 @@ func TestPerms(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want []int
+		want [][]int
 	}{
-		{"Case 1", args{[]int{1, 2, 3}}, []int{1, 2, 3, 1, 3, 2, 2, 1, 3, 2, 3, 1, 3, 1, 2, 3, 2, 1}},
-		{"Case 2", args{[]int{2, 3, 5, 7}}, []int{2, 3, 5, 7, 2, 3, 7, 5, 2, 5, 3, 7, 2, 5, 7, 3, 2,
-			7, 3, 5, 2, 7, 5, 3, 3, 2, 5, 7, 3, 2, 7, 5, 3, 5, 2, 7, 3, 5, 7, 2, 3, 7,
-			2, 5, 3, 7, 5, 2, 5, 2, 3, 7, 5, 2, 7, 3, 5, 3, 2, 7, 5, 3, 7, 2, 5, 7, 2,
-			3, 5, 7, 3, 2, 7, 2, 3, 5, 7, 2, 5, 3, 7, 3, 2, 5, 7, 3, 5, 2, 7, 5, 2, 3,
-			7, 5, 3, 2}},
+		{"Case 1", args{[]int{1, 2, 3}}, [][]int{{1, 2, 3}, {1, 3, 2}, {2, 1, 3},
+			{2, 3, 1}, {3, 1, 2}, {3, 2, 1}}},
+		{"Case 2", args{[]int{2, 3, 5, 7}}, [][]int{{2, 3, 5, 7}, {2, 3, 7, 5},
+			{2, 5, 3, 7}, {2, 5, 7, 3}, {2, 7, 3, 5}, {2, 7, 5, 3}, {3, 2, 5, 7},
+			{3, 2, 7, 5}, {3, 5, 2, 7}, {3, 5, 7, 2}, {3, 7, 2, 5}, {3, 7, 5, 2},
+			{5, 2, 3, 7}, {5, 2, 7, 3}, {5, 3, 2, 7}, {5, 3, 7, 2}, {5, 7, 2, 3},
+			{5, 7, 3, 2}, {7, 2, 3, 5}, {7, 2, 5, 3}, {7, 3, 2, 5}, {7, 3, 5, 2},
+			{7, 5, 2, 3}, {7, 5, 3, 2}}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -45,14 +47,6 @@ func ExamplePerms() {
 	// [12 19 3]
 	// [19 3 12]
 	// [19 12 3]
-}
-
-func flatInt(c chan []int) []int {
-	var ret []int
-	for s := range c {
-		ret = append(ret, s...)
-	}
-	return ret
 }
 
 func TestNCR(t *testing.T) {
@@ -82,4 +76,58 @@ func TestNCR(t *testing.T) {
 func ExampleNCR() {
 	fmt.Println(iter.NCR(345, 123))
 	// Output: 1779250012189601570865983811876820662273364126974614125481776575877025962657174021802908075728000
+}
+
+func TestCombIndex(t *testing.T) {
+	type args struct {
+		n int
+		k int
+	}
+	tests := []struct {
+		name string
+		args args
+		want [][]int
+	}{
+		{"Case 1", args{5, 2}, [][]int{{0, 1}, {0, 2}, {0, 3}, {0, 4}, {1, 2},
+			{1, 3}, {1, 4}, {2, 3}, {2, 4}, {3, 4}}},
+		{"Case 2", args{7, 3}, [][]int{{0, 1, 2}, {0, 1, 3}, {0, 1, 4}, {0, 1, 5},
+			{0, 1, 6}, {0, 2, 3}, {0, 2, 4}, {0, 2, 5}, {0, 2, 6}, {0, 3, 4},
+			{0, 3, 5}, {0, 3, 6}, {0, 4, 5}, {0, 4, 6}, {0, 5, 6}, {1, 2, 3},
+			{1, 2, 4}, {1, 2, 5}, {1, 2, 6}, {1, 3, 4}, {1, 3, 5}, {1, 3, 6},
+			{1, 4, 5}, {1, 4, 6}, {1, 5, 6}, {2, 3, 4}, {2, 3, 5}, {2, 3, 6},
+			{2, 4, 5}, {2, 4, 6}, {2, 5, 6}, {3, 4, 5}, {3, 4, 6}, {3, 5, 6},
+			{4, 5, 6}}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := flatInt(iter.CombIndex(tt.args.n, tt.args.k)); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("CombIndex() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleCombIndex() {
+	for v := range iter.CombIndex(5, 3) {
+		fmt.Println(v)
+	}
+	// Output:
+	// [0 1 2]
+	// [0 1 3]
+	// [0 1 4]
+	// [0 2 3]
+	// [0 2 4]
+	// [0 3 4]
+	// [1 2 3]
+	// [1 2 4]
+	// [1 3 4]
+	// [2 3 4]
+}
+
+func flatInt(c <-chan []int) [][]int {
+	var ret [][]int
+	for s := range c {
+		ret = append(ret, s)
+	}
+	return ret
 }
