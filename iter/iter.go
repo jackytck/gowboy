@@ -1,6 +1,9 @@
 package iter
 
-import "math/big"
+import (
+	"math/big"
+	"reflect"
+)
 
 // Perms return a channel of each permutation of a slice.
 func Perms(slice []int) <-chan []int {
@@ -67,5 +70,22 @@ func CombIndex(n, k int) <-chan []int {
 		}
 	}()
 
+	return c
+}
+
+// Comb gives the combinations of selecting k items from the slice of collection.
+func Comb(collection interface{}, k int) <-chan []interface{} {
+	col := reflect.ValueOf(collection)
+	c := make(chan []interface{})
+	go func() {
+		defer close(c)
+		for indices := range CombIndex(col.Len(), k) {
+			var chosen []interface{}
+			for _, i := range indices {
+				chosen = append(chosen, col.Index(i).Interface())
+			}
+			c <- chosen
+		}
+	}()
 	return c
 }

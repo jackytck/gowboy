@@ -124,9 +124,98 @@ func ExampleCombIndex() {
 	// [2 3 4]
 }
 
+func TestComb(t *testing.T) {
+	type args struct {
+		collection interface{}
+		k          int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{"Case 1", args{"abc", 2}, []string{"ab", "ac", "bc"}},
+		{"Case 2", args{"jacky", 3}, []string{"jac", "jak", "jay", "jck", "jcy",
+			"jky", "ack", "acy", "aky", "cky"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := flatString(iter.Comb(tt.args.collection, tt.args.k)); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Comb() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleComb() {
+	for v := range iter.Comb([]int{2, 3, 5, 7, 11, 13}, 3) {
+		fmt.Println(v)
+	}
+	for v := range iter.Comb("gowboy", 3) {
+		var s string
+		for _, c := range v {
+			s += string(c.(uint8))
+		}
+		fmt.Println(s)
+	}
+	// Output:
+	// [2 3 5]
+	// [2 3 7]
+	// [2 3 11]
+	// [2 3 13]
+	// [2 5 7]
+	// [2 5 11]
+	// [2 5 13]
+	// [2 7 11]
+	// [2 7 13]
+	// [2 11 13]
+	// [3 5 7]
+	// [3 5 11]
+	// [3 5 13]
+	// [3 7 11]
+	// [3 7 13]
+	// [3 11 13]
+	// [5 7 11]
+	// [5 7 13]
+	// [5 11 13]
+	// [7 11 13]
+	// gow
+	// gob
+	// goo
+	// goy
+	// gwb
+	// gwo
+	// gwy
+	// gbo
+	// gby
+	// goy
+	// owb
+	// owo
+	// owy
+	// obo
+	// oby
+	// ooy
+	// wbo
+	// wby
+	// woy
+	// boy
+}
+
 func flatInt(c <-chan []int) [][]int {
 	var ret [][]int
 	for s := range c {
+		ret = append(ret, s)
+	}
+	return ret
+}
+
+func flatString(c <-chan []interface{}) []string {
+	var ret []string
+	for slice := range c {
+		var s string
+		for _, c := range slice {
+			s += string(c.(uint8))
+		}
 		ret = append(ret, s)
 	}
 	return ret
