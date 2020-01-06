@@ -267,3 +267,32 @@ func ExampleReverseString() {
 	fmt.Println(common.ReverseString("a racecar"))
 	// Output: racecar a
 }
+
+func TestCopySliceInt(t *testing.T) {
+	type args struct {
+		a []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"Case 1", args{[]int{}}, []int{}},
+		{"Case 2", args{[]int{2, 3, 4, 1, 8, 7, 1, 5}}, []int{2, 3, 4, 1, 8, 7, 1, 5}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.CopySliceInt(tt.args.a); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("CopySliceInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleCopySliceInt() {
+	src := []int{1, 2, 3, 4}
+	dst := common.CopySliceInt(src)
+	src[1] = 5
+	fmt.Println(dst)
+	// Output: [1 2 3 4]
+}

@@ -88,3 +88,10 @@ func ReverseString(s string) string {
 	}
 	return r
 }
+
+// CopySliceInt copy a slice of int.
+func CopySliceInt(a []int) []int {
+	ret := make([]int, len(a))
+	copy(ret, a)
+	return ret
+}
