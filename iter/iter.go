@@ -3,6 +3,8 @@ package iter
 import (
 	"math/big"
 	"reflect"
+
+	"github.com/jackytck/gowboy/common"
 )
 
 // Perms return a channel of each permutation of a slice.
@@ -56,17 +58,11 @@ func CombIndex(n, k int) <-chan []int {
 		return true
 	}
 
-	cop := func(a []int) []int {
-		b := make([]int, len(a))
-		copy(b, a)
-		return b
-	}
-
 	go func() {
 		defer close(c)
-		c <- cop(comb)
+		c <- common.CopySliceInt(comb)
 		for next() {
-			c <- cop(comb)
+			c <- common.CopySliceInt(comb)
 		}
 	}()
 
@@ -85,6 +81,41 @@ func Comb(collection interface{}, k int) <-chan []interface{} {
 				chosen = append(chosen, col.Index(i).Interface())
 			}
 			c <- chosen
+		}
+	}()
+	return c
+}
+
+// CartProduct produces the indices of the Cartesian Product.
+func CartProduct(size, repeat int) chan []int {
+	c := make(chan []int)
+	go func() {
+		defer close(c)
+		if size < 1 || repeat < 1 {
+			c <- []int{0}
+		} else if size == 1 {
+			c <- make([]int, repeat)
+		} else {
+			list := make([]int, repeat)
+			for {
+				c <- common.CopySliceInt(list)
+
+				// add one to the last index
+				list[repeat-1]++
+
+				// carry
+				for i := repeat - 1; i > 0; i-- {
+					if list[i] == size {
+						list[i] = 0
+						list[i-1]++
+					}
+				}
+
+				// exhausted all
+				if list[0] == size {
+					return
+				}
+			}
 		}
 	}()
 	return c
