@@ -296,3 +296,34 @@ func ExampleCopySliceInt() {
 	fmt.Println(dst)
 	// Output: [1 2 3 4]
 }
+
+func TestIncludesInt(t *testing.T) {
+	type args struct {
+		s []int
+		e int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{[]int{1, 2, 3}, 2}, true},
+		{"Case 2", args{[]int{1, 2, 3}, 4}, false},
+		{"Case 3", args{[]int{1, 2, 3}, 8}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.IncludesInt(tt.args.s, tt.args.e); got != tt.want {
+				t.Errorf("IncludesInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIncludesInt() {
+	fmt.Println(common.IncludesInt([]int{2, 3, 5, 7, 11, 13}, 6))
+	fmt.Println(common.IncludesInt([]int{2, 3, 5, 7, 11, 13}, 11))
+	// Output:
+	// false
+	// true
+}
