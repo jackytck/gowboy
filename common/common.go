@@ -3,6 +3,7 @@ package common
 import (
 	"math"
 	"math/big"
+	"sort"
 )
 
 // Sum returns the sum of its argument.
@@ -104,4 +105,18 @@ func IncludesInt(s []int, e int) bool {
 		}
 	}
 	return false
+}
+
+// UniqueInt returns the set of unique and sorted int from the given slice of int.
+func UniqueInt(s []int) []int {
+	m := make(map[int]bool)
+	for _, v := range s {
+		m[v] = true
+	}
+	var keys []int
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	return keys
 }

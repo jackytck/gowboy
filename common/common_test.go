@@ -327,3 +327,31 @@ func ExampleIncludesInt() {
 	// false
 	// true
 }
+
+func TestUniqueInt(t *testing.T) {
+	type args struct {
+		s []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"Case 1", args{[]int{1, 2, 3, 4, 5}}, []int{1, 2, 3, 4, 5}},
+		{"Case 2", args{[]int{1, 1, 0, 5, 5}}, []int{0, 1, 5}},
+		{"Case 3", args{[]int{2, 0, 4, 5, 4}}, []int{0, 2, 4, 5}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := common.UniqueInt(tt.args.s); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("UniqueInt() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleUniqueInt() {
+	fmt.Println(common.UniqueInt([]int{1, 1, 2, 3, 5, 8, 2, 3, 5, 7, 11, 13}))
+	// Output:
+	// [1 2 3 5 7 8 11 13]
+}
