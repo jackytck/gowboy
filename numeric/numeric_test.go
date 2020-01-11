@@ -2,6 +2,7 @@ package numeric_test
 
 import (
 	"fmt"
+	"math"
 	"math/big"
 	"reflect"
 	"testing"
@@ -41,6 +42,43 @@ func TestSqrt(t *testing.T) {
 func ExampleSqrt() {
 	fmt.Println(numeric.Sqrt(23418, 20))
 	// Output: 153 15302940893828218664881
+}
+
+func TestSqrtExapnd(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"Case 1", args{2}, []int{1, 2}},
+		{"Case 2", args{3}, []int{1, 1, 2}},
+		{"Case 3", args{17}, []int{4, 8}},
+		{"Case 4", args{64}, []int{8}},
+		{"Case 5", args{144}, []int{12}},
+		{"Case 6", args{234}, []int{15, 3, 2, 1, 2, 1, 2, 3, 30}},
+		{"Case 7", args{3889}, []int{62, 2, 1, 3, 4, 2, 1, 7, 1, 1, 1, 1, 1, 17, 5, 7, 7, 5, 17, 1,
+			1, 1, 1, 1, 7, 1, 2, 4, 3, 1, 2, 124}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := numeric.SqrtExpand(tt.args.n); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SqrtExapnd() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleSqrtExpand() {
+	fmt.Println(numeric.SqrtExpand(12))
+	est := 3 + 1.0/(2+1.0/(6+1.0/(2+1.0/6)))
+	act := math.Sqrt(12)
+	fmt.Printf("Actual: %.5f Estimate: %.5f\n", act, est)
+	// Output:
+	// [3 2 6]
+	// Actual: 3.46410 Estimate: 3.46409
 }
 
 func str2int(s string) *big.Int {
