@@ -64,3 +64,38 @@ func SqrtExpand(n int) []int {
 	}
 	return terms
 }
+
+// SqrtConvergent gives the i-th convergent of the continued fraction of the
+// squart root of n.
+func SqrtConvergent(n, i int) (*big.Int, *big.Int) {
+	if n < 0 || i < 0 || number.IsSquareNumber(n) {
+		return big.NewInt(0), big.NewInt(0)
+	}
+	a := SqrtExpand(n)
+	if i == 0 {
+		return big.NewInt(int64(a[0])), big.NewInt(1)
+	}
+
+	s := len(a) - 1
+	p, q := big.NewInt(1), big.NewInt(0)
+	p2, q2 := big.NewInt(0), big.NewInt(1)
+	for j := 0; j <= i; j++ {
+		an := a[(j-1)%s+1]
+		if j == 0 {
+			an = a[0]
+		}
+
+		// p2, p = p, an*p+p2
+		nextP := big.NewInt(0).Set(p)
+		nextP.Mul(nextP, big.NewInt(int64(an)))
+		nextP.Add(nextP, p2)
+		p2, p = p, nextP
+
+		// q2, q = q, an*q+q2
+		nextQ := big.NewInt(0).Set(q)
+		nextQ.Mul(nextQ, big.NewInt(int64(an)))
+		nextQ.Add(nextQ, q2)
+		q2, q = q, nextQ
+	}
+	return p, q
+}

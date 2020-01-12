@@ -44,7 +44,7 @@ func ExampleSqrt() {
 	// Output: 153 15302940893828218664881
 }
 
-func TestSqrtExapnd(t *testing.T) {
+func TestSqrtExpand(t *testing.T) {
 	type args struct {
 		n int
 	}
@@ -79,6 +79,59 @@ func ExampleSqrtExpand() {
 	// Output:
 	// [3 2 6]
 	// Actual: 3.46410 Estimate: 3.46409
+}
+
+func TestSqrtConvergent(t *testing.T) {
+	type args struct {
+		n int
+		i int
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  *big.Int
+		want1 *big.Int
+	}{
+		{"Case 1", args{-2, 3}, big.NewInt(0), big.NewInt(0)},
+		{"Case 1", args{123, -1}, big.NewInt(0), big.NewInt(0)},
+		{"Case 1", args{123, 0}, big.NewInt(11), big.NewInt(1)},
+		{"Case 1", args{123, 7}, big.NewInt(1772148577), big.NewInt(159789256)},
+		{"Case 1", args{144, 3}, big.NewInt(0), big.NewInt(0)},
+		{"Case 1", args{3889, 12}, big.NewInt(630603), big.NewInt(10112)},
+		{"Case 1", args{1123581321, 23}, big.NewInt(24321622557433), big.NewInt(725588330)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := numeric.SqrtConvergent(tt.args.n, tt.args.i)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SqrtConvergent() got = %v, want %v", got, tt.want)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("SqrtConvergent() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
+func ExampleSqrtConvergent() {
+	for i := 1; i < 6; i++ {
+		p, q := numeric.SqrtConvergent(6, i)
+		fmt.Printf("%v/%v\n", p, q)
+	}
+
+	c := 2341871
+	p, q := numeric.SqrtConvergent(c, 17)
+	pf := new(big.Float).SetInt(p)
+	qf := new(big.Float).SetInt(q)
+	fmt.Printf("%v/%v = %.5f ~= %.5f\n", p, q, pf.Quo(pf, qf), math.Sqrt(float64(c)))
+
+	// Output:
+	// 5/2
+	// 22/9
+	// 49/20
+	// 218/89
+	// 485/198
+	// 1076962912001/703751386 = 1530.31729 ~= 1530.31729
 }
 
 func str2int(s string) *big.Int {
