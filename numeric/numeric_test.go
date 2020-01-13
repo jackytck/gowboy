@@ -134,6 +134,53 @@ func ExampleSqrtConvergent() {
 	// 1076962912001/703751386 = 1530.31729 ~= 1530.31729
 }
 
+func TestPellFundamental(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  *big.Int
+		want1 *big.Int
+	}{
+		{"Case 1", args{2}, big.NewInt(3), big.NewInt(2)},
+		{"Case 2", args{3}, big.NewInt(2), big.NewInt(1)},
+		{"Case 3", args{5}, big.NewInt(9), big.NewInt(4)},
+		{"Case 4", args{6}, big.NewInt(5), big.NewInt(2)},
+		{"Case 5", args{7}, big.NewInt(8), big.NewInt(3)},
+		{"Case 6", args{8}, big.NewInt(3), big.NewInt(1)},
+		{"Case 7", args{10}, big.NewInt(19), big.NewInt(6)},
+		{"Case 8", args{11}, big.NewInt(10), big.NewInt(3)},
+		{"Case 9", args{12}, big.NewInt(7), big.NewInt(2)},
+		{"Case 10", args{13}, big.NewInt(649), big.NewInt(180)},
+		{"Case 11", args{14}, big.NewInt(15), big.NewInt(4)},
+		{"Case 12", args{15}, big.NewInt(4), big.NewInt(1)},
+		{"Case 13", args{81}, big.NewInt(1), big.NewInt(0)},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := numeric.PellFundamental(tt.args.n)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("PellFundamental() got = %v, want %v", got, tt.want)
+			}
+			if !reflect.DeepEqual(got1, tt.want1) {
+				t.Errorf("PellFundamental() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
+func ExamplePellFundamental() {
+	// x^2 - 234*y^2 = 1
+	n := 234
+	x, y := numeric.PellFundamental(n)
+	xi, yi := x.Int64(), y.Int64()
+	fmt.Printf("%d^2 - %d * %d^2 = %d\n", x, n, y, xi*xi-int64(n)*yi*yi)
+	// Output:
+	// 5201^2 - 234 * 340^2 = 1
+}
+
 func str2int(s string) *big.Int {
 	i := new(big.Int)
 	i.SetString(s, 10)
