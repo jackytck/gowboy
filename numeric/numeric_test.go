@@ -181,8 +181,41 @@ func ExamplePellFundamental() {
 	// 5201^2 - 234 * 340^2 = 1
 }
 
+func TestLagrangePoly(t *testing.T) {
+	type args struct {
+		xs []float64
+		ys []float64
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want1 []float64
+		want2 []float64
+	}{
+		{"Case 1", args{[]float64{1, 2, 3}, []float64{1, 4, 9}}, []float64{-1, -2, -3, 4, 5}, []float64{1, 4, 9, 16, 25}},
+		{"Case 2", args{[]float64{1}, []float64{1}}, []float64{1, 2}, []float64{1, 1}},
+		{"Case 3", args{[]float64{1, 2}, []float64{1, 8}}, []float64{1, 2, 3}, []float64{1, 8, 15}},
+		{"Case 4", args{[]float64{1, 2, 3}, []float64{1, 8, 27}}, []float64{-1, -2, -3, 1, 2, 3, 4}, []float64{23, 52, 93, 1, 8, 27, 58}},
+		{"Case 5", args{[]float64{1, 2, 3, 4}, []float64{1, 8, 27, 64}}, []float64{1, 2, 3, 4, 5}, []float64{1, 8, 27, 64, 125}}}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := mapFloat(numeric.LagrangePoly(tt.args.xs, tt.args.ys), tt.want1); !reflect.DeepEqual(got, tt.want2) {
+				t.Errorf("LagrangePoly() = %v, want %v", got, tt.want1)
+			}
+		})
+	}
+}
+
 func str2int(s string) *big.Int {
 	i := new(big.Int)
 	i.SetString(s, 10)
 	return i
+}
+
+func mapFloat(fn func(float64) float64, vals []float64) []float64 {
+	var ret []float64
+	for _, v := range vals {
+		ret = append(ret, fn(v))
+	}
+	return ret
 }
