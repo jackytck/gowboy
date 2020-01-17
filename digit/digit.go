@@ -154,3 +154,25 @@ func IsPandigital(n int) bool {
 	}
 	return ans
 }
+
+// IsBouncy determines if a number is bouncy.
+// Bouncy number is a positive integer whose digits neither increase nor
+// decrease.
+func IsBouncy(n int) bool {
+	if n <= 0 {
+		return false
+	}
+	ds := SliceInt(n)
+	var up, down bool
+	for i := 1; i < len(ds); i++ {
+		if ds[i] > ds[i-1] {
+			up = true
+		} else if ds[i] < ds[i-1] {
+			down = true
+		}
+		if up && down {
+			break
+		}
+	}
+	return up && down
+}

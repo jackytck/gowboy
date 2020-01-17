@@ -441,3 +441,36 @@ func ExampleIsPandigital() {
 	// true
 	// false
 }
+
+func TestIsBouncy(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{-12}, false},
+		{"Case 2", args{-121}, false},
+		{"Case 3", args{101}, true},
+		{"Case 4", args{123}, false},
+		{"Case 5", args{2341871}, true},
+		{"Case 5", args{8432}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := digit.IsBouncy(tt.args.n); got != tt.want {
+				t.Errorf("IsBouncy() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsBouncy() {
+	fmt.Println(digit.IsBouncy(221))
+	fmt.Println(digit.IsBouncy(121))
+	// Output:
+	// false
+	// true
+}
