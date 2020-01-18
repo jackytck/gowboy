@@ -73,3 +73,8 @@ func SimplifyFraction(a, b int) (int, int) {
 	gcd := GCD(a, b)
 	return a / gcd, b / gcd
 }
+
+// IsAbundant determines if a number is abundant.
+func IsAbundant(n int) bool {
+	return SumProperDivisors(n) > n
+}

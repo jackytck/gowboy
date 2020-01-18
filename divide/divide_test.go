@@ -255,3 +255,37 @@ func ExampleSimplifyFraction() {
 	fmt.Println(divide.SimplifyFraction(163926, 679122))
 	// Output: 7 29
 }
+
+func TestIsAbundant(t *testing.T) {
+	type args struct {
+		n int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{"Case 1", args{2}, false},
+		{"Case 2", args{12}, true},
+		{"Case 3", args{18}, true},
+		{"Case 4", args{20}, true},
+		{"Case 5", args{22}, false},
+		{"Case 6", args{48}, true},
+		{"Case 7", args{95}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := divide.IsAbundant(tt.args.n); got != tt.want {
+				t.Errorf("IsAbundant() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func ExampleIsAbundant() {
+	fmt.Println(divide.IsAbundant(105))
+	fmt.Println(divide.IsAbundant(112))
+	// Output:
+	// false
+	// true
+}
